@@ -8,6 +8,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         ArrayList<Question> questions = new ArrayList<>();
+        int score = 0;
 
         questions.add(new Question(
                 "Which planet has a day longer than its year?",
@@ -64,7 +65,10 @@ public class Main {
         System.out.println("====================================");
         System.out.println("Ready to test your brain? 😏🔥");
 
+        int questionNumber = 1;
         for (Question q : questions) {
+
+            System.out.println("\n 🔥 Question " + questionNumber + "of" + questions.size());
 
             System.out.println("\n------------------------------------");
             System.out.println("❓ " + q.question);
@@ -80,8 +84,12 @@ public class Main {
 
             if (answer.equals(q.correctAnswer)) {
 
+                score++;
+
                 System.out.println("\n🔥🔥 WOW! YOU CRACKED IT! 🔥🔥");
                 System.out.println("🎉 That's absolutely correct! 😎");
+                System.out.println("🏆 +1 Point!!!");
+                System.out.println("📊 Current Score: " +score);
 
             } else {
 
@@ -90,11 +98,29 @@ public class Main {
                 System.out.println("✅ Correct answer: " + q.correctAnswer);
                 System.out.println("💡 Fun Fact: " + q.funFact);
             }
+
+            questionNumber++;
+
         }
 
         System.out.println("\n====================================");
         System.out.println("       🎉 QUIZ COMPLETED! 🎉");
         System.out.println("====================================");
+
+        System.out.println("🏆 Your Final Score: " + score + "/" + questions.size());
+
+        if (score == questions.size()) {
+
+            System.out.println("🔥🔥 PERFECT SCORE! YOU ARE UNSTOPPABLE! 🔥🔥");
+
+        } else if (score >= questions.size() / 2) {
+
+            System.out.println("😎 Nice job! You cracked most of them! 🔥");
+
+        } else {
+
+            System.out.println("😅 Keep going! Your brain needs another round! 🧠🔥");
+        }
 
         scanner.close();
     }
