@@ -7,10 +7,12 @@ public class Question {
     String optionD;
     String correctAnswer;
     String funFact;
+    String category;
 
     public Question(String question, String optionA, String optionB,
                     String optionC, String optionD,
-                    String correctAnswer, String funFact) {
+                    String correctAnswer, String funFact,
+                    String category) {
 
         this.question = question;
         this.optionA = optionA;
@@ -19,5 +21,6 @@ public class Question {
         this.optionD = optionD;
         this.correctAnswer = correctAnswer;
         this.funFact = funFact;
+        this.category = category;
     }
 }
