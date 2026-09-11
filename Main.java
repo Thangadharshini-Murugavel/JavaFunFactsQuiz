@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -96,7 +97,7 @@ public class Main {
         ));
 
         questions.add(new Question(
-                "Which animal is known for changing its color to blend into its surroundings?",
+                "Which animal is famous for changing its color?",
                 "A. Chameleon",
                 "B. Zebra",
                 "C. Elephant",
@@ -167,7 +168,7 @@ public class Main {
         ));
 
         questions.add(new Question(
-                "Which part of the body controls balance?",
+                "Which part of the brain helps control balance?",
                 "A. Cerebellum",
                 "B. Stomach",
                 "C. Liver",
@@ -178,7 +179,7 @@ public class Main {
         ));
 
         questions.add(new Question(
-                "Which organ is mainly responsible for filtering waste from the blood?",
+                "Which organs mainly filter waste from the blood?",
                 "A. Heart",
                 "B. Kidneys",
                 "C. Brain",
@@ -190,131 +191,213 @@ public class Main {
 
 
         // ==============================
-        // 🎮 QUIZ INTRO
+        // 🎮 MAIN GAME LOOP
         // ==============================
 
-        System.out.println("====================================");
-        System.out.println("       🌍 FUN FACTS QUIZ 🌍");
-        System.out.println("====================================");
+        boolean playAgain = true;
 
-        System.out.println("\nChoose your category:");
-        System.out.println("1. 🌌 Space");
-        System.out.println("2. 🐾 Animals");
-        System.out.println("3. 🧠 Human Body");
+        while (playAgain) {
 
-        System.out.print("\n👉 Enter your choice: ");
+            System.out.println("\n====================================");
+            System.out.println("       🌍 FUN FACTS QUIZ 🌍");
+            System.out.println("====================================");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+            System.out.println("\nChoose your category:");
+            System.out.println("1. 🌌 Space");
+            System.out.println("2. 🐾 Animals");
+            System.out.println("3. 🧠 Human Body");
 
-        String selectedCategory;
+            int choice = 0;
 
-        switch (choice) {
+            while (choice < 1 || choice > 3) {
 
-            case 1:
-                selectedCategory = "Space";
-                break;
+                System.out.print("\n👉 Enter your choice (1-3): ");
 
-            case 2:
-                selectedCategory = "Animals";
-                break;
+                String input = scanner.nextLine().trim();
 
-            case 3:
-                selectedCategory = "Human Body";
-                break;
+                try {
 
-            default:
-                selectedCategory = "Space";
-                System.out.println("\n⚠️ Invalid choice!");
-                System.out.println("🌌 Space selected by default.");
-        }
+                    choice = Integer.parseInt(input);
 
+                    if (choice < 1 || choice > 3) {
+                        System.out.println("⚠️ Please choose 1, 2, or 3.");
+                    }
 
-        // ==============================
-        // 🔎 FILTER QUESTIONS
-        // ==============================
+                } catch (NumberFormatException e) {
 
-        ArrayList<Question> selectedQuestions = new ArrayList<>();
-
-        for (Question q : questions) {
-
-            if (q.category.equals(selectedCategory)) {
-                selectedQuestions.add(q);
+                    System.out.println("⚠️ Please enter a number!");
+                }
             }
-        }
 
 
-        // ==============================
-        // 🏆 QUIZ
-        // ==============================
+            String selectedCategory;
 
-        int score = 0;
-        int questionNumber = 1;
+            switch (choice) {
 
-        System.out.println("\n====================================");
-        System.out.println("      🎮 " + selectedCategory + " QUIZ");
-        System.out.println("====================================");
+                case 1:
+                    selectedCategory = "Space";
+                    break;
 
-        for (Question q : selectedQuestions) {
+                case 2:
+                    selectedCategory = "Animals";
+                    break;
 
-            System.out.println("\n🔥 Question " + questionNumber
-                    + " of " + selectedQuestions.size());
+                default:
+                    selectedCategory = "Human Body";
+            }
 
-            System.out.println("\n❓ " + q.question);
-            System.out.println("------------------------------------");
 
-            System.out.println(q.optionA);
-            System.out.println(q.optionB);
-            System.out.println(q.optionC);
-            System.out.println(q.optionD);
+            // ==============================
+            // 🔎 FILTER QUESTIONS
+            // ==============================
 
-            System.out.print("\n👉 Your answer: ");
+            ArrayList<Question> selectedQuestions = new ArrayList<>();
 
-            String answer = scanner.nextLine().trim().toUpperCase();
+            for (Question q : questions) {
 
-            if (answer.equals(q.correctAnswer)) {
+                if (q.category.equals(selectedCategory)) {
+                    selectedQuestions.add(q);
+                }
+            }
 
-                score++;
 
-                System.out.println("\n🔥🔥 WOW! YOU CRACKED IT! 🔥🔥");
-                System.out.println("🎉 That's absolutely correct! 😎");
-                System.out.println("🏆 +1 point!");
-                System.out.println("📊 Current Score: " + score);
+            // ==============================
+            // 🎲 RANDOMIZE QUESTIONS
+            // ==============================
+
+            Collections.shuffle(selectedQuestions);
+
+
+            // ==============================
+            // 🏆 QUIZ
+            // ==============================
+
+            int score = 0;
+            int questionNumber = 1;
+
+            System.out.println("\n====================================");
+            System.out.println("      🎮 " + selectedCategory + " QUIZ");
+            System.out.println("====================================");
+
+            for (Question q : selectedQuestions) {
+
+                System.out.println("\n🔥 Question " + questionNumber
+                        + " of " + selectedQuestions.size());
+
+                System.out.println("\n❓ " + q.question);
+                System.out.println("------------------------------------");
+
+                System.out.println(q.optionA);
+                System.out.println(q.optionB);
+                System.out.println(q.optionC);
+                System.out.println(q.optionD);
+
+
+                // ==============================
+                // 🛡️ ANSWER VALIDATION
+                // ==============================
+
+                String answer = "";
+
+                while (!answer.equals("A")
+                        && !answer.equals("B")
+                        && !answer.equals("C")
+                        && !answer.equals("D")) {
+
+                    System.out.print("\n👉 Your answer (A-D): ");
+
+                    answer = scanner.nextLine().trim().toUpperCase();
+
+                    if (!answer.equals("A")
+                            && !answer.equals("B")
+                            && !answer.equals("C")
+                            && !answer.equals("D")) {
+
+                        System.out.println("⚠️ Invalid answer!");
+                        System.out.println("Please enter only A, B, C, or D.");
+                    }
+                }
+
+
+                // ==============================
+                // 🎉 CHECK ANSWER
+                // ==============================
+
+                if (answer.equals(q.correctAnswer)) {
+
+                    score++;
+
+                    System.out.println("\n🔥🔥 WOW! YOU CRACKED IT! 🔥🔥");
+                    System.out.println("🎉 That's absolutely correct! 😎");
+                    System.out.println("🏆 +1 point!");
+                    System.out.println("📊 Current Score: " + score);
+
+                } else {
+
+                    System.out.println("\n😢 OHHH NOOO! 😭");
+                    System.out.println("❌ Not this time!");
+                    System.out.println("✅ Correct answer: " + q.correctAnswer);
+                    System.out.println("💡 Fun Fact: " + q.funFact);
+                }
+
+                questionNumber++;
+            }
+
+
+            // ==============================
+            // 🎉 FINAL RESULT
+            // ==============================
+
+            System.out.println("\n====================================");
+            System.out.println("       🎉 QUIZ COMPLETED! 🎉");
+            System.out.println("====================================");
+
+            System.out.println("\n🏆 Your Final Score: "
+                    + score + "/" + selectedQuestions.size());
+
+            if (score == selectedQuestions.size()) {
+
+                System.out.println("🔥🔥 PERFECT SCORE! YOU ARE UNSTOPPABLE! 🔥🔥");
+
+            } else if (score >= selectedQuestions.size() / 2) {
+
+                System.out.println("😎 Nice job! You cracked most of them! 🔥");
 
             } else {
 
-                System.out.println("\n😢 OHHH NOOO! 😭");
-                System.out.println("❌ Not this time!");
-                System.out.println("✅ Correct answer: " + q.correctAnswer);
-                System.out.println("💡 Fun Fact: " + q.funFact);
+                System.out.println("😅 Keep going! Your brain needs another round! 🧠🔥");
             }
 
-            questionNumber++;
-        }
 
+            // ==============================
+            // 🔄 PLAY AGAIN
+            // ==============================
 
-        // ==============================
-        // 🎉 FINAL RESULT
-        // ==============================
+            String again = "";
 
-        System.out.println("\n====================================");
-        System.out.println("       🎉 QUIZ COMPLETED! 🎉");
-        System.out.println("====================================");
+            while (!again.equals("Y") && !again.equals("N")) {
 
-        System.out.println("\n🏆 Your Final Score: "
-                + score + "/" + selectedQuestions.size());
+                System.out.print("\n🔄 Wanna play again? (Y/N): ");
 
-        if (score == selectedQuestions.size()) {
+                again = scanner.nextLine().trim().toUpperCase();
 
-            System.out.println("🔥🔥 PERFECT SCORE! YOU ARE UNSTOPPABLE! 🔥🔥");
+                if (!again.equals("Y") && !again.equals("N")) {
 
-        } else if (score >= selectedQuestions.size() / 2) {
+                    System.out.println("⚠️ Please enter Y or N.");
+                }
+            }
 
-            System.out.println("😎 Nice job! You cracked most of them! 🔥");
+            if (again.equals("N")) {
 
-        } else {
+                playAgain = false;
 
-            System.out.println("😅 Keep going! Your brain needs another round! 🧠🔥");
+                System.out.println("\n👋 Thanks for playing!");
+                System.out.println("🔥 See you next time, quiz master!");
+
+            } else {
+
+                System.out.println("\n🚀 Let's go again!");
+            }
         }
 
         scanner.close();
