@@ -43,7 +43,7 @@ public class Main {
                 "C. Saturn",
                 "D. Neptune",
                 "B",
-                "Jupiter is so large that more than 1,300 Earths could fit inside it!",
+                "Jupiter is the largest planet in our Solar System!",
                 "Space"
         ));
 
@@ -152,7 +152,7 @@ public class Main {
                 "C. 306",
                 "D. 406",
                 "B",
-                "Most adults have 206 bones, although the exact number can vary slightly!",
+                "Most adults have 206 bones!",
                 "Human Body"
         ));
 
@@ -163,7 +163,7 @@ public class Main {
                 "C. Heart",
                 "D. Lung",
                 "C",
-                "Your heart beats around 100,000 times a day on average!",
+                "Your heart pumps blood throughout your body!",
                 "Human Body"
         ));
 
@@ -174,7 +174,7 @@ public class Main {
                 "C. Liver",
                 "D. Kidney",
                 "A",
-                "The cerebellum plays an important role in balance, coordination, and movement!",
+                "The cerebellum plays an important role in balance and coordination!",
                 "Human Body"
         ));
 
@@ -185,13 +185,13 @@ public class Main {
                 "C. Brain",
                 "D. Stomach",
                 "B",
-                "Your kidneys filter your blood and help remove waste through urine!",
+                "Your kidneys filter waste from your blood and help produce urine!",
                 "Human Body"
         ));
 
 
         // ==============================
-        // 🎮 MAIN GAME LOOP
+        // 🎮 GAME LOOP
         // ==============================
 
         boolean playAgain = true;
@@ -208,6 +208,10 @@ public class Main {
             System.out.println("3. 🧠 Human Body");
 
             int choice = 0;
+
+            // ==============================
+            // 🛡️ CATEGORY VALIDATION
+            // ==============================
 
             while (choice < 1 || choice > 3) {
 
@@ -262,14 +266,14 @@ public class Main {
 
 
             // ==============================
-            // 🎲 RANDOMIZE QUESTIONS
+            // 🎲 SHUFFLE QUESTIONS
             // ==============================
 
             Collections.shuffle(selectedQuestions);
 
 
             // ==============================
-            // 🏆 QUIZ
+            // 🏆 START QUIZ
             // ==============================
 
             int score = 0;
@@ -313,7 +317,7 @@ public class Main {
                             && !answer.equals("C")
                             && !answer.equals("D")) {
 
-                        System.out.println("⚠️ Invalid answer!");
+                        System.out.println("\n⚠️ Invalid answer!");
                         System.out.println("Please enter only A, B, C, or D.");
                     }
                 }
@@ -330,7 +334,8 @@ public class Main {
                     System.out.println("\n🔥🔥 WOW! YOU CRACKED IT! 🔥🔥");
                     System.out.println("🎉 That's absolutely correct! 😎");
                     System.out.println("🏆 +1 point!");
-                    System.out.println("📊 Current Score: " + score);
+                    System.out.println("📊 Current Score: "
+                            + score + "/" + questionNumber);
 
                 } else {
 
@@ -345,27 +350,44 @@ public class Main {
 
 
             // ==============================
-            // 🎉 FINAL RESULT
+            // 🎉 FINAL RESULTS
             // ==============================
+
+            int totalQuestions = selectedQuestions.size();
+
+            double percentage =
+                    (score * 100.0) / totalQuestions;
 
             System.out.println("\n====================================");
             System.out.println("       🎉 QUIZ COMPLETED! 🎉");
             System.out.println("====================================");
 
-            System.out.println("\n🏆 Your Final Score: "
-                    + score + "/" + selectedQuestions.size());
+            System.out.println("\n📚 Category: " + selectedCategory);
+            System.out.println("🏆 Final Score: "
+                    + score + "/" + totalQuestions);
 
-            if (score == selectedQuestions.size()) {
+            System.out.printf("📊 Percentage: %.0f%%%n", percentage);
 
-                System.out.println("🔥🔥 PERFECT SCORE! YOU ARE UNSTOPPABLE! 🔥🔥");
 
-            } else if (score >= selectedQuestions.size() / 2) {
+            if (score == totalQuestions) {
 
-                System.out.println("😎 Nice job! You cracked most of them! 🔥");
+                System.out.println("\n🔥🔥 PERFECT SCORE! 🔥🔥");
+                System.out.println("👑 YOU ARE A FUN FACTS MASTER!");
+
+            } else if (score >= 4) {
+
+                System.out.println("\n🔥 AWESOME JOB!");
+                System.out.println("😎 You really know your stuff!");
+
+            } else if (score >= 3) {
+
+                System.out.println("\n😎 NICE WORK!");
+                System.out.println("🧠 You're getting smarter!");
 
             } else {
 
-                System.out.println("😅 Keep going! Your brain needs another round! 🧠🔥");
+                System.out.println("\n😅 GOOD TRY!");
+                System.out.println("💡 Keep playing and learn more fun facts!");
             }
 
 
@@ -391,8 +413,10 @@ public class Main {
 
                 playAgain = false;
 
-                System.out.println("\n👋 Thanks for playing!");
+                System.out.println("\n====================================");
+                System.out.println("👋 Thanks for playing!");
                 System.out.println("🔥 See you next time, quiz master!");
+                System.out.println("====================================");
 
             } else {
 
